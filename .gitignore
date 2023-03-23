@@ -152,3 +152,4 @@ cython_debug/
 #.idea/
 social_book/core/migrations/0001_initial.py
 social_book/core/models.py
+

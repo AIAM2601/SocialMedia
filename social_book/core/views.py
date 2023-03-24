@@ -5,6 +5,8 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from itertools import chain
 from .models import Profile, Post, LikePost, FollowersCount
+from django.core.mail import EmailMessage, get_connection
+from django.conf import settings
 import random
 
 # Create your views here.
@@ -161,7 +163,7 @@ def follow(request):
         return redirect('/') 
 
 @login_required(login_url='signin')
-def settings(request):
+def usersettings(request):
     user_profile = Profile.objects.get(user=request.user)#currently auth user
 
     if request.method == 'POST':
@@ -185,7 +187,7 @@ def settings(request):
             user_profile.bio = bio
             user_profile.location = location
             user_profile.save()
-        return redirect('settings')    
+        return redirect('usersettings')    
     return render(request, "setting.html", {"user_profile": user_profile}) #pass to the view so that I can handle it in the html
 
 def signup(request):
@@ -240,6 +242,26 @@ def signin(request):
     else:
         return render(request, "signin.html")
     
+def forgotpass(request):
+    if request.method == "POST":
+        email = request.POST['email']
+        if User.objects.filter(email=email).exists():
+            messages.info(request, 'Email taken - please login')
+        else: 
+            with get_connection(
+                host=settings.EMAIL_HOST, 
+                port=settings.EMAIL_PORT,  
+                username=settings.EMAIL_HOST_USER, 
+                password=settings.EMAIL_HOST_PASSWORD, 
+                use_tls=settings.EMAIL_USE_TLS  
+            ) as connection:
+                subject = "You forgot your password?"
+                email_from = settings.EMAIL_HOST_USER
+                email = request.POST['email']
+                message = "if you forgot your password, click the link below to recover it" #todo link for user 
+                EmailMessage(subject, message, email_from, [email], connection=connection).send()
+    return render(request, "forgotPass.html")
+
 @login_required(login_url='signin')
 def logout(request):
     auth.logout(request)

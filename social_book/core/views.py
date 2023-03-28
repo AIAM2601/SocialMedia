@@ -218,7 +218,7 @@ def signup(request):
                 user_model = User.objects.get(username=username) #gets the object of the user
                 new_profile = Profile.objects.create(user=user_model, id_user=user_model.id)
                 new_profile.save()
-                return redirect('settings')#to login then
+                return redirect('usersettings')#to login then
         else: 
             messages.info(request, 'Password not matching')
             return redirect('signup')
@@ -241,26 +241,6 @@ def signin(request):
             return redirect('signin')
     else:
         return render(request, "signin.html")
-    
-def forgotpass(request):
-    if request.method == "POST":
-        email = request.POST['email']
-        if User.objects.filter(email=email).exists():
-            messages.info(request, 'Email taken - please login')
-        else: 
-            with get_connection(
-                host=settings.EMAIL_HOST, 
-                port=settings.EMAIL_PORT,  
-                username=settings.EMAIL_HOST_USER, 
-                password=settings.EMAIL_HOST_PASSWORD, 
-                use_tls=settings.EMAIL_USE_TLS  
-            ) as connection:
-                subject = "You forgot your password?"
-                email_from = settings.EMAIL_HOST_USER
-                email = request.POST['email']
-                message = "if you forgot your password, click the link below to recover it" #todo link for user 
-                EmailMessage(subject, message, email_from, [email], connection=connection).send()
-    return render(request, "forgotPass.html")
 
 @login_required(login_url='signin')
 def logout(request):

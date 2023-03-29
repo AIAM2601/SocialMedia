@@ -2,7 +2,6 @@ from django.urls import path
 from . import views
 
 from django.contrib.auth.views import (
-    LogoutView, 
     PasswordResetView, 
     PasswordResetDoneView, 
     PasswordResetConfirmView,
@@ -15,9 +14,11 @@ urlpatterns = [
     path('upload', views.upload, name="upload"),
     path('follow', views.follow, name="follow"),
     path('search', views.search, name="search"),
-    path('profile/<str:pk>', views.profile, name="profile"),
     path('likePost', views.likePost, name="likePost"),
     path('signup', views.signup, name="signup"),
+    path('activate/<slug:uidb64>/<slug:token>', views.activate, name="activate"),
+    path('checkEmail', views.checkEmail, name="checkEmail"),
+    path('profile/<str:pk>', views.profile, name="profile"),
     path('signin', views.signin, name="signin"),
     path('password-reset/', PasswordResetView.as_view(template_name='password_reset.html'),name='password-reset'),
     path('password-reset/done/', PasswordResetDoneView.as_view(template_name='password_reset_done.html'),name='password_reset_done'),

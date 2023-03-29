@@ -1,11 +1,17 @@
 from django.shortcuts import render, redirect
+from django.contrib.sites.shortcuts import get_current_site
+from django.template.loader import render_to_string
+from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
+from django.utils.encoding import force_bytes, force_str
+from .tokens import generate_token
 from django.http import HttpResponse
 from django.contrib.auth.models import User, auth
+from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from itertools import chain
 from .models import Profile, Post, LikePost, FollowersCount
-from django.core.mail import EmailMessage, get_connection
+from django.core.mail import send_mail, EmailMessage
 from django.conf import settings
 import random
 
@@ -207,24 +213,71 @@ def signup(request):
                 messages.info(request, 'Username taken')
                 return redirect('signup')
             else: 
+                # create user 
                 user = User.objects.create_user(username=username, email=email, password=password)
+                user.is_active = False
                 user.save()
 
+                ## Welcome email
+                subject = "Welcome to IReal!"
+                message = "Hello " + user.username + " Thank you for signing up!"
+                from_email = settings.EMAIL_HOST_USER
+                to_list = [user.email]
+                send_mail(subject, message, from_email, to_list, fail_silently=True)
+
+                # Email address confirmation
+                current_site = get_current_site(request)
+                email_subject = "Confirm your email"
+                message2 = render_to_string('email_confirmation.html', {
+                    'name': user.username,
+                    'domain': current_site.domain,
+                    'uid': urlsafe_base64_encode(force_bytes(user.pk)),
+                    'token': generate_token.make_token(user)
+                })
+
+                email = EmailMessage(
+                    email_subject,
+                    message2,
+                    settings.EMAIL_HOST_USER,
+                    [user.email],
+                )
+                email.fail_silently = True
+                email.send()
+
                 #log user in and redirect to settings pages
-                user_login = auth.authenticate(username=username, password=password)
-                auth.login(request, user_login)
+                # user_login = auth.authenticate(username=username, password=password)
+                # auth.login(request, user_login)
 
                 #create a profile object for the new user
                 user_model = User.objects.get(username=username) #gets the object of the user
                 new_profile = Profile.objects.create(user=user_model, id_user=user_model.id)
                 new_profile.save()
-                return redirect('usersettings')#to login then
+
+                return redirect('/checkEmail')
         else: 
             messages.info(request, 'Password not matching')
             return redirect('signup')
     else: 
         return render(request, 'signup.html')
     
+def activate (request, uidb64, token):
+    try:
+        uid = force_str(urlsafe_base64_decode(uidb64))
+        user = User.objects.get(pk=uid)
+    except (TypeError, ValueError, OverflowError, User.DoesNotExist):
+        user = None
+    
+    if user is not None and generate_token.check_token(user, token):
+        user.is_active = True
+        user.save()
+        login(request, user)
+        return redirect('usersettings')
+    else:
+        return redirect(request, 'activation_failed.html')
+        
+def checkEmail(request):
+    return render(request, "check_email.html")
+
 def signin(request):
     
     if request.method == "POST":

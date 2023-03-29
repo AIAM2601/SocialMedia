@@ -19,6 +19,7 @@ import random
 
 @login_required(login_url='signin') #handles logout if user logs out it will redirect them to sign in / must be logged in
 def index(request):
+    #feed
     user_object = User.objects.get(username=request.user.username)
     user_profile = Profile.objects.get(user=user_object) 
 
@@ -61,7 +62,6 @@ def index(request):
         
     suggestions_username_profile_list = list(chain(*username_profile_list))
 
-    posts = Post.objects.all()
     return render(request, "index.html", {'user_profile': user_profile, 'posts': feed_list, 'suggestions_username_profile_list': suggestions_username_profile_list[:4]}) #posts is a list that we're passing
 
 @login_required(login_url='signin') 
@@ -82,22 +82,24 @@ def upload(request):
 def search(request):
     user_object = User.objects.get(username=request.user.username)
     user_profile = Profile.objects.get(user=user_object)
+    username_profile_list = [] # Define the variable before the if condition and set it to an empty list
 
     if request.method == 'POST':
-        username = request.POST['username']
-        username_object = User.objects.filter(username__icontains=username)
+        if 'username' in request.POST:
+            username = request.POST['username']
+            username_object = User.objects.filter(username__icontains=username) #searches for username case insensitive
 
-        username_profile = []
-        username_profile_list = []
+            username_profile = []
 
-        for users in username_object:
-            username_profile.append(users.id)
+            for users in username_object:
+                username_profile.append(users.id) #adds users.id to the list of username profiles
 
-        for ids in username_profile:
-            profile_lists = Profile.objects.filter(id_user=ids)
-            username_profile_list.append(profile_lists)
+            for ids in username_profile:
+                profile_lists = Profile.objects.filter(id_user=ids) #gets the ids for profiles
+                username_profile_list.extend(profile_lists) # Update the list with profiles that match the search criteria
 
-            username_profile_list = list(chain(*username_profile_list))
+            username_profile_list = list(set(username_profile_list)) # Remove duplicates from the list of profiles
+
     return render(request, "search.html", {'user_profile': user_profile, 'username_profile_list': username_profile_list})
 
 @login_required(login_url='signin') 
@@ -157,10 +159,12 @@ def follow(request):
         follower = request.POST['follower']
         user = request.POST['user']
 
+    #delete because it already exists
         if FollowersCount.objects.filter(follower=follower, user=user).first():
             delete_follower = FollowersCount.objects.get(follower=follower, user=user)
             delete_follower.delete()
             return redirect('/profile/'+user)
+    #create folower
         else: 
             new_follower = FollowersCount.objects.create(follower=follower, user=user)
             new_follower.save()
@@ -283,12 +287,21 @@ def signin(request):
     if request.method == "POST":
         username = request.POST['username']
         password = request.POST['password']
+        if 'rememberMe' in request.POST:
+         rememberMe = request.POST['rememberMe']
+        else: 
+            rememberMe = False
 
-        user = auth.authenticate(username=username, password=password)
+        user = authenticate(username=username, password=password)
         
         if user is not None:
-            auth.login(request, user)
-            return redirect('/')
+            login(request, user)
+            if not rememberMe:
+                request.session.set_expiry(0)
+                return redirect('/')
+            else: 
+                request.session.set_expiry(settings.SESSION_COOKIE_AGE)
+                return redirect('/')
         else: 
             messages.info(request, 'Credentials invalid')
             return redirect('signin')

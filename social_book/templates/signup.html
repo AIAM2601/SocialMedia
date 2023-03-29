@@ -9,7 +9,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="{% static 'assets/images/favicon.png' %}" rel="icon" type="image/png">
-    <title>Sign up - Icarus</title>
+    <title>Sign up - IReal</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="{% static 'assets/css/icons.css' %}">
@@ -32,7 +32,7 @@
                 <div class="flex items-center lg:justify-between justify-around">
 
                     <a href="trending.html">
-                        <b><h1 style="font-size: 1.5rem;">Icarus</h1></b>
+                        <b><h1 style="font-size: 1.5rem;">IReal</h1></b>
                     </a>
 
                     <div class="capitalize flex font-semibold hidden lg:block my-2 space-x-3 text-center text-sm">
@@ -86,57 +86,18 @@
 
         <div class="lg:mb-5 py-3 uk-link-reset">
             <div class="flex flex-col items-center justify-between lg:flex-row max-w-6xl mx-auto lg:space-y-0 space-y-3">
-                <div class="flex space-x-2 text-gray-700 uppercase">
+                {% comment %} <div class="flex space-x-2 text-gray-700 uppercase">
                     <a href="#"> About</a>
                     <a href="#"> Help</a>
                     <a href="#"> Terms</a>
                     <a href="#"> Privacy</a>
-                </div>
-                <p class="capitalize"> © copyright 2020 by Icarus</p>
+                </div> {% endcomment %}
+                <p class="capitalize"> © copyright 2020 by IReal</p>
             </div>
         </div>
 
     </div>
 
-    <!--<script>
-        
-        (function (window, document, undefined) {
-            'use strict';
-            if (!('localStorage' in window)) return;
-            var nightMode = localStorage.getItem('gmtNightMode');
-            if (nightMode) {
-                document.documentElement.className += ' dark';
-            }
-        })(window, document);
-    
-    
-        (function (window, document, undefined) {
-    
-            'use strict';
-    
-            // Feature test
-            if (!('localStorage' in window)) return;
-    
-            // Get our newly insert toggle
-            var nightMode = document.querySelector('#night-mode');
-            if (!nightMode) return;
-    
-            // When clicked, toggle night mode on or off
-            nightMode.addEventListener('click', function (event) {
-                event.preventDefault();
-                document.documentElement.classList.toggle('dark');
-                if (document.documentElement.classList.contains('dark')) {
-                    localStorage.setItem('gmtNightMode', true);
-                    return;
-                }
-                localStorage.removeItem('gmtNightMode');
-            }, false);
-    
-        })(window, document);
-    </script>-->
-
-    <!-- Scripts
-    ================================================== -->
     <script src="{% static 'assets/js/tippy.all.min.js' %}"></script>
     <script src="{% static 'assets/js/jquery-3.3.1.min.js' %}"></script>
     <script src="{% static 'assets/js/uikit.js' %}"></script>

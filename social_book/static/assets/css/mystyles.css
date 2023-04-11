@@ -1,0 +1,57 @@
+
+
+/*Profile image*/
+  .user-avatar {
+    margin: 5px;
+    max-width: 250px;
+    max-height: 250px;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    border: 2px solid pink;
+    border-radius: 10px;
+    border-right-color: #4680ff;
+    border-top-color: #4680ff;
+    border-left-color: pink;
+    box-shadow: 0 1px 0 pink;
+    overflow: hidden;
+  }
+  
+  .user-avatar > figure > img {
+    width: 100%
+  }
+  
+  .user-avatar > figure {
+    margin-bottom: 0;
+    position: relative;
+  }
+
+.firstSection {
+  float: left;
+  /* background-color: blue; */
+}
+/*second section*/
+.secondSection {
+    margin-top: 10px;
+    margin-left: 15px;
+}
+
+.profileBtn {
+  padding: 5px;
+  color: white;
+  font-weight: bold;
+  border-radius: 5px;
+}
+
+.UserPosts {
+  /* background-color: gray; */
+  column-count: 4;
+}
+
+.postCount {
+  text-align: center;
+  font-size: 40px;
+  font-weight: bold;
+  margin-top: 10px;
+}

@@ -8,8 +8,9 @@
  
 
 body{
-  background-color: #B0B3B8!important;
+  /* background-color: #B0B3B8!important; */
 }
+
 
 /* ---------------------------------- */
 /* Buttons
@@ -1192,10 +1193,10 @@ input:checked + .switch-button:before {
 /* Common Styles
 ------------------------------------- */
 body {
-  color: #666;
+  /* color: #666; */
   font-size: 15px;
   line-height: 27px;
-  background-color: #f0f2f5;
+  background-color: #e9f2ff;
   font-family: "Inter", sans-serif;
   text-transform: none;
 }

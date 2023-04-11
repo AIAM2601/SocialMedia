@@ -767,8 +767,8 @@ video {
 }
 
 .bg-pink-500{
-  --tw-bg-opacity: 1;
-  background-color: #1c1e21;
+  --tw-bg-opacity: 1; 
+  background-color: #eb00df;
 }
 
 .bg-pink-600{

@@ -9,7 +9,7 @@
     <title>Sign in</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    {% comment %} <link rel="stylesheet" href="{% static 'assets/css/icons.css' %}"> {% endcomment %}
+    <link rel="stylesheet" href="{% static 'assets/css/icons.css' %}">
     <link rel="stylesheet" href="{% static 'assets/css/uikit.css' %}">
     <link rel="stylesheet" href="{% static 'assets/css/style.css' %}">
     <link rel="stylesheet" href="{% static 'assets/css/tailwind.css' %}">
@@ -31,8 +31,7 @@
                     </a>
 
                     <div class="capitalize flex font-semibold hidden lg:block my-2 space-x-3 text-center text-sm">
-                        
-                        <a href="/signup" class="bg-pink-500 pink-500 px-6 py-3 rounded-md shadow text-white">Register</a>
+                        <a href="/signup" class="bg-blue-400 px-6 py-3 rounded-md shadow text-white">Register</a>
                     </div>
 
                 </div>
@@ -44,7 +43,7 @@
             <div class="lg:p-12 max-w-md max-w-xl lg:my-0 my-12 mx-auto p-6 space-y-">
                 <h1 class="lg:text-3xl text-xl font-semibold  mb-6"> Log in</h1>
 
-                <div> 
+                <div>
                     {% for message in messages %}
                     <h5 style="color: red"> {{message}}
                     {% endfor %}
@@ -60,15 +59,15 @@
                             <label for="chekcbox1"><span class="checkbox-icon"></span>Remember Me</label>
                         </div>
                         <a href="/password-reset"> Forgot Your Password? </a>
-                    </div> 
-                    <button type="submit" class="bg-gradient-to-br from-pink-500 py-3 rounded-md text-white text-xl to-red-400 w-full">Login</button>
+                    </div>
+                    <button type="submit" class="bg-gradient-to-br from-blue-500 py-3 rounded-md text-white text-xl to-red-400 w-full">Login</button>
                     <div class="text-center mt-5 space-x-2">
                         <p class="text-base"> Not registered? <a href="/signup" class=""> Create a account </a></p>
                     </div>
                 </form>
             </div>
         </div>
-        
+
         <!-- Footer -->
 
         <div class="lg:mb-5 py-3 uk-link-reset">

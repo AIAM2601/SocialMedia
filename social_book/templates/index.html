@@ -14,6 +14,7 @@
     <link rel="stylesheet" href="{% static 'assets/css/style.css' %}">
     <link rel="stylesheet" href="{% static 'assets/css/tailwind.css' %}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
 </head>
 
 <body>
@@ -48,6 +49,9 @@
                         </div>
                     </form>
                     <div class="right-side lg:pr-4">
+                        {% for message in messages %}
+                            <span style="color: red; margin-left: 5px">{{message}}</span>
+                        {% endfor %}
                          <!-- upload -->
                         <a href="#" 
                             class="bg-blue-400 flex font-bold hidden hover:bg-pink-600 hover:text-white inline-block items-center lg:block max-h-5 mr-4 px-6 py-2 rounded shadow text-white">
@@ -80,7 +84,7 @@
                                             <div>
                                                 <input type="file" name="image_upload">
                                                 {% comment %} <a href="#" class="button soft-warning small"> Choose file</a> {% endcomment %}
-                                                <textarea class="button soft-warning small" name="caption" placeholder="caption..."></textarea>
+                                                <textarea class="button soft-warning small" name="caption" placeholder="Comment..."></textarea>
                                                 <br>
                                                 <button class="bg-blue-400 font-bold hidden hover:bg-pink-600 hover:text-white max-h-5 mr-4 px-6 py-2 lg:block  rounded shadow text-white" type="submit">Post</button>
                                             </div>
@@ -191,31 +195,22 @@
 
             <div class="container m-auto">
 
-                <!--<h1 class="lg:text-2xl text-lg font-extrabold leading-none text-gray-900 tracking-tight mb-5"> Feed </h1>--->
-
                 <div class="lg:flex justify-center lg:space-x-10 lg:space-y-0 space-y-5">
-
                     <!-- left sidebar-->
                     <div class="space-y-5 flex-shrink-0 lg:w-7/12">
-
                         <!-- post 1-->
                         <div class="bg-white shadow rounded-md  -mx-2 lg:mx-0">
-    
                             <!-- post header-->
                             {% for post in posts reversed %} <!--to show latest post reversed-->
                             <div class="flex justify-between items-center px-4 py-3">
                                 <div class="flex flex-1 items-center space-x-4">
-                                    <a href="#">
-                                        <div class="bg-gradient-to-tr from-yellow-600 to-pink-600 p-0.5 rounded-full">  
-                                            <img src="{{user_profile.profileimg.url}}' %}" class="bg-gray-200 border border-white rounded-full w-8 h-8">
-                                        </div>
-                                    </a>
                                     <span class="block capitalize font-semibold "> <a href="/profile/{{post.user}}">@{{post.user}}</a> </span>
                                 </div>
                               <div>
                                 <a href="#"> <i class="icon-feather-more-horizontal text-2xl hover:bg-gray-200 rounded-full p-2 transition -mr-1 "></i> </a>
                                 <div class="bg-white w-56 shadow-md mx-auto p-2 mt-12 rounded-md text-gray-500 hidden text-base border border-gray-100  " uk-drop="mode: hover;pos: top-right">
                               
+                                    {% comment %} option for the three dotted menu on posts 
                                     <ul class="space-y-1">
                                       <li> 
                                           <a href="#" class="flex items-center px-3 py-2 hover:bg-gray-200 hover:text-gray-800 rounded-md ">
@@ -245,21 +240,26 @@
                                            <i class="uil-trash-alt mr-1"></i>  Delete
                                           </a> 
                                       </li>
-                                    </ul>
+                                    </ul> {% endcomment %}
                                 
                                 </div>
                               </div>
                             </div>
     
+                            {% if post.image %}
                             <div uk-lightbox>
                                 <a href="{{post.image.url}}">  
                                     <img src="{{post.image.url}}" alt="">
                                 </a>
                             </div>
-                            
-    
+                            {% else %}
+                            <p>
+                                <a class="py-3 px-4 space-y-3" href="/profile/{{post.user}}"><strong>{{post.user}}</strong></a> {{post.caption}}
+                            </p>
+                            {% endif %}
+                    
                             <div class="py-3 px-4 space-y-3"> 
-                               
+                               {% comment %} likess {% endcomment %}
                                 <div class="flex space-x-4 lg:font-bold"> 
                                     <a href="/likePost?post_id={{post.id}}" class="flex items-center space-x-2">
                                         <div class="p-2 rounded-full text-black">
@@ -274,86 +274,59 @@
                                             <p>Liked by {{post.num_of_likes}} people</p>
                                             {% endif %}
                                         </div>
-                                        
                                     </a>
-                                    {% comment %} <a href="#" class="flex items-center space-x-2">
-                                        <div class="p-2 rounded-full text-black">
-                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" width="25" height="25" class="">
-                                                <path fill-rule="evenodd" d="M18 5v8a2 2 0 01-2 2h-5l-5 4v-4H4a2 2 0 01-2-2V5a2 2 0 012-2h12a2 2 0 012 2zM7 8H5v2h2V8zm2 0h2v2H9V8zm6 0h-2v2h2V8z" clip-rule="evenodd" />
-                                            </svg>
-                                        </div>
-                                        
-                                    </a>{% endcomment %}
+                                    {% if post.image %}
                                     <a href="{{post.image.url}}" class="flex items-center space-x-2 flex-1 justify-end" download> <!--download to the html tag to download specific image | using url-->
                                         <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" width="25" height="25" preserveAspectRatio="xMidYMid meet" viewBox="0 0 16 16"><g fill="currentColor"><path d="M8.5 1.5A1.5 1.5 0 0 1 10 0h4a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h6c-.314.418-.5.937-.5 1.5v6h-2a.5.5 0 0 0-.354.854l2.5 2.5a.5.5 0 0 0 .708 0l2.5-2.5A.5.5 0 0 0 10.5 7.5h-2v-6z"/></g></svg>
-                                        
                                     </a> 
+                                    {% endif %}
                                 </div>
-                                {% comment %} <div class="flex items-center space-x-3"> 
-                                    <div class="flex items-center">
-                                        <img src="{% static 'assets/images/avatars/avatar-1.jpg' %}" alt="" class="w-6 h-6 rounded-full border-2 border-white ">
-                                        <img src="{% static 'assets/images/avatars/avatar-4.jpg' %}" alt="" class="w-6 h-6 rounded-full border-2 border-white  -ml-2">
-                                        <img src="{% static 'assets/images/avatars/avatar-2.jpg' %}" alt="" class="w-6 h-6 rounded-full border-2 border-white  -ml-2">
-                                    </div>
-                                    <div class="">
-                                        Liked <strong> taiye</strong> and <strong> 209 Others </strong>
-                                    </div>
-                                </div> {% endcomment %}
 
+                                {% if post.image %}
                                 <p>
                                     <a href="/profile/{{post.user}}"><strong>{{post.user}}</strong></a> {{post.caption}}
                                 </p>
+                                {% endif %}
 
-                                {% comment %} <div class="border-t pt-4 space-y-4 ">
-                                    <div class="flex">
-                                        <div class="w-10 h-10 rounded-full relative flex-shrink-0">
-                                            <img src="{% static 'assets/images/avatars/avatar-1.jpg' %}" alt="" class="absolute h-full rounded-full w-full">
+                                {% comment %} comments {% endcomment %}
+                                {% for comment in post.comments.all %}
+                                    <div class="border-t pt-4 space-y-4 ">
+                                            <div class="flex">
+                                                <div class="w-10 h-10 rounded-full relative flex-shrink-0">
+                                                    <a href="/profile/{{comment.author}}"><strong>{{comment.author}}</strong></a>
+                                                </div>
+                                                
+                                                <div class="  px-2 rounded-md   ">
+                                                    <p class="leading-6">{{ comment.text }}</p>
+                                                    <div class="absolute w-3 h-3 top-3 -left-1 bg-gray-100 transform rotate-45 "></div>
+                                                </div>
                                         </div>
-                                        <div class="text-gray-700 py-2 px-3 rounded-md bg-gray-100 h-full relative lg:ml-5 ml-2 lg:mr-20   ">
-                                            <p class="leading-6">Y'all like billie eillish? <urna class="i uil-heart"></urna> <i
-                                                    class="uil-grin-tongue-wink"> </i> </p>
-                                            <div class="absolute w-3 h-3 top-3 -left-1 bg-gray-100 transform rotate-45 "></div>
-                                        </div>
-                                    </div>
-                                    <div class="flex">
-                                        <div class="w-10 h-10 rounded-full relative flex-shrink-0">
-                                            <img src="{% static 'assets/images/avatars/avatar-1.jpg' %}" alt="" class="absolute h-full rounded-full w-full">
-                                        </div>
-                                        <div class="text-gray-700 py-2 px-3 rounded-md bg-gray-100 h-full relative lg:ml-5 ml-2 lg:mr-20   ">
-                                            <p class="leading-6">She's my favourite <i class="uil-grin-tongue-wink-alt"></i>
-                                            </p>
-                                            <div class="absolute w-3 h-3 top-3 -left-1 bg-gray-100 transform rotate-45 "></div>
-                                        </div>
-                                    </div>
-                                </div> {% endcomment %}
-
+                                    </div>  
+                                {% endfor %}
+                            {% comment %} Post a comment  {% endcomment %}
                                 <div class="bg-gray-100 bg-gray-100 rounded-full rounded-md relative ">
-                                    <input type="text" placeholder="post a comment" class="bg-transparent max-h-10 shadow-none">
-                                    <div class="absolute bottom-0 flex h-full items-center right-0 right-3 text-xl space-x-2">
-                                        <a href="#"> <i class="uil-image"></i></a>
-                                        <a href="#"> <i class="uil-video"></i></a>
-                                    </div>
+                                    <form action="/comments?post_id={{post.id}}" method="POST"> 
+                                        {% csrf_token %}
+                                        <input name="CommentText" type="text" placeholder="post a comment" class="bg-transparent max-h-10 shadow-none">
+                                        <div class="absolute bottom-0 flex h-full items-center right-0 right-3 text-xl space-x-2">
+                                            <button type="submit"><i class="icon-feather-arrow-up-circle text-2xl hover:bg-gray-200 rounded-full p-2 transition -mr-1"></i> </button>
+                                        </div>
+                                    </form>
                                 </div>
-    
-                            </div>
-
+                            </div> 
                             {% endfor %}
-    
                         </div>
                     
-                        {% comment %} <!-- Load more-->
+                        <!-- Load more-->
                         <div class="flex justify-center mt-6" id="toggle" hidden>
                             <a href="#"
                                 class="bg-white  font-semibold my-3 px-6 py-2 rounded-full shadow-md  ">
                                 Load more ..</a>
-                        </div> {% endcomment %}
-
-
+                        </div> 
                     </div>
 
                     <!-- right sidebar-->
                     <div class="lg:w-5/12">
-
                         <div class="bg-white  shadow-md rounded-md overflow-hidden">
 
                             <div class="bg-gray-50  border-b border-gray-100 flex items-baseline justify-between py-4 px-6 ">
@@ -362,7 +335,6 @@
                             </div>
                            
                             <div class="divide-gray-300 divide-gray-50 divide-opacity-50 divide-y px-4 ">
-
                                 {% for suggestion in suggestions_username_profile_list %}
                                 <div class="flex items-center justify-between py-3">
                                     <div class="flex flex-1 items-center space-x-4">
@@ -378,11 +350,8 @@
                                     <a href="/profile/{{suggestion.user}}" class="border border-gray-200 font-semibold px-4 py-1 rounded-full hover:bg-pink-600 hover:text-white hover:border-pink-600 "> View User </a>
                                 </div>
                                 {% endfor %}
-                                
                                 </div>
-
                             </div>
-
                         </div>
                     </div>
                 </div>               
@@ -401,6 +370,4 @@
 
     <script src="{% static '../../unpkg.com/ionicons%405.2.3/dist/ionicons.js' %}"></script>
 </body>
-
-
 </html>

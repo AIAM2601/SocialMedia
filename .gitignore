@@ -156,3 +156,14 @@ social_book/core/models.py
 social_book/core/migrations/0002_post.py
 social_book/core/migrations/0003_likepost.py
 social_book/core/migrations/0004_followerscount.py
+social_book/media/post_images/trump.png
+social_book/media/post_images/bbc-logo.png
+social_book/media/post_images/slide-3-bg-900x675.jpg
+social_book/media/profile_images/signin_HWjUixB.png
+social_book/media/profile_images/signin.png
+social_book/media/profile_images/arrow-right.png
+social_book/media/post_images/trump_ZVDEi3F.png
+social_book/media/post_images/trump_YOv82GA.png
+social_book/media/post_images/trump_Idkc4Op.png
+social_book/media/post_images/search.png
+social_book/media/post_images/arrow.png

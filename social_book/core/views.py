@@ -10,7 +10,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from itertools import chain
-from .models import Profile, Post, LikePost, FollowersCount
+from .models import Profile, Post, LikePost, FollowersCount, Comments
 from django.core.mail import send_mail, EmailMessage
 from django.conf import settings
 import random
@@ -37,6 +37,14 @@ def index(request):
     
     feed_list = list(chain(*feed))
 
+    if feed_list: 
+        # Get all the comments for the feed list
+        for post in feed_list:
+            comments = post.comments.all()
+            post.comments.set(comments)
+    else: 
+        comments = ""
+
     #user suggestion starts
     all_users = User.objects.all()
     user_following_all = []
@@ -62,20 +70,39 @@ def index(request):
         
     suggestions_username_profile_list = list(chain(*username_profile_list))
 
-    return render(request, "index.html", {'user_profile': user_profile, 'posts': feed_list, 'suggestions_username_profile_list': suggestions_username_profile_list[:4]}) #posts is a list that we're passing
+    return render(request, "index.html", {'user_profile': user_profile, 'posts': feed_list, 'suggestions_username_profile_list': suggestions_username_profile_list[:4], 'comments': comments}) #posts is a list that we're passing
 
 @login_required(login_url='signin') 
 def upload(request):
 
     if request.method == 'POST':
-        user = request.user.username
         image  = request.FILES.get('image_upload')
-        caption = request.POST['caption']
+        if image: 
+            user = request.user.username
+            caption = request.POST['caption']
 
-        new_post = Post.objects.create(user=user, image=image, caption=caption)
-        new_post.save()
-        return redirect('/')
+            new_post = Post.objects.create(user=user, image=image, caption=caption)
+            new_post.save()
+            return redirect('/')
+        else:
+            messages.error(request, 'Please add an image')
+            return redirect('/')
+            
     else: 
+        return redirect('/')
+
+@login_required(login_url='signin') 
+def comments(request):
+    if request.method == 'POST':
+        post_id = request.GET.get('post_id')
+        user = request.user.username
+        text = request.POST['CommentText']
+        post = Post.objects.get(id=post_id)
+        print('post id' +post_id)
+        new_comment = Comments.objects.create(author=user, post=post, text=text)
+        new_comment.save()
+        return redirect('/')
+    else:
         return redirect('/')
 
 @login_required(login_url='signin')

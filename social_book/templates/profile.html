@@ -105,17 +105,20 @@
 		<div class="UserPosts">
 			<ul class="photos">
 				{% for post in user_posts %}
+				{% if post.image %}
 				<li>
-					<a class="strip" href="{{post.image.url}}" title="" data-strip-group="mygroup" data-strip-group-options="loop: false">
+					<a href="{{post.image.url}}" title="" data-strip-group="mygroup" data-strip-group-options="loop: false">
 						<img src="{{post.image.url}}" style="height: 250px; width: 300px;" alt=""></a>
 				</li>
+				{% endif%}
 				{% endfor %}
 			</ul>
 		</div>
 	</section>
 
 
-	<script data-cfasync="false" src="{% static '../../cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js' %}"></script><script src="{% static 'js/main.min.js' %}"></script>
+	<script data-cfasync="false" src="{% static '../../cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js' %}"></script>
+	<script src="{% static 'js/main.min.js' %}"></script>
 	<script src="{% static 'js/script.js' %}"></script>
 	 <!-- Scripts
     ================================================== -->

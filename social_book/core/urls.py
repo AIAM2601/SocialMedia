@@ -14,6 +14,7 @@ urlpatterns = [
     path('upload', views.upload, name="upload"),
     path('follow', views.follow, name="follow"),
     path('search', views.search, name="search"),
+    path('comments', views.comments, name="comments"),
     path('likePost', views.likePost, name="likePost"),
     path('signup', views.signup, name="signup"),
     path('activate/<slug:uidb64>/<slug:token>', views.activate, name="activate"),

@@ -1,57 +1,31 @@
 
 
-/*Profile image*/
-  .user-avatar {
-    margin: 5px;
-    max-width: 250px;
-    max-height: 250px;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: center;
-    border: 2px solid pink;
-    border-radius: 10px;
-    border-right-color: #4680ff;
-    border-top-color: #4680ff;
-    border-left-color: pink;
-    box-shadow: 0 1px 0 pink;
-    overflow: hidden;
+@media (min-width: 1024px) {
+.searchContainer {
+    max-width: 900px !important;
+    padding-top: 45px;
+}
+}
+
+@media (min-width: 1500px) {
+.searchContainer {
+    max-width: 1000px !important;
+}
+}
+
+@media (max-width: 992px) {
+.searchContainer {
+    padding: 10px 20px !important;
+}
+}
+
+@media (max-width: 900px) {
+    .indexContainer {
+      margin-top: -100px;
+    }
   }
-  
-  .user-avatar > figure > img {
-    width: 100%
+@media (max-width: 950px) {
+    .userSettingsContainer {
+      margin-top: -100px;
+    }
   }
-  
-  .user-avatar > figure {
-    margin-bottom: 0;
-    position: relative;
-  }
-
-.firstSection {
-  float: left;
-  /* background-color: blue; */
-}
-/*second section*/
-.secondSection {
-    margin-top: 10px;
-    margin-left: 15px;
-}
-
-.profileBtn {
-  padding: 5px;
-  color: white;
-  font-weight: bold;
-  border-radius: 5px;
-}
-
-.UserPosts {
-  /* background-color: gray; */
-  column-count: 4;
-}
-
-.postCount {
-  text-align: center;
-  font-size: 40px;
-  font-weight: bold;
-  margin-top: 10px;
-}

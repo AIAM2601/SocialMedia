@@ -9,18 +9,17 @@
     <meta name="keywords" content="" />
 	<title>Profile - {{user_profile.user.username}}</title>
     <link rel="stylesheet" href="{% static 'css/main.min.css' %}">
-	<link rel="stylesheet" href="{% static 'assets/css/icons.css' %}">
+	{% comment %} <link rel="stylesheet" href="{% static 'assets/css/icons.css' %}"> {% endcomment %}
     <link rel="stylesheet" href="{% static 'assets/css/uikit.css' %}">
     <link rel="stylesheet" href="{% static 'assets/css/style.css' %}">
     <link rel="stylesheet" href="{% static 'assets/css/tailwind.css' %}">
-    <link rel="stylesheet" href="{% static 'assets/css/mystyles.css' %}">
+    {% comment %} <link rel="stylesheet" href="{% static 'assets/css/mystyles.css' %}"> {% endcomment %}
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
 </head>
 <body>
-	<header>
+	<header style="margin-bottom: 5px;">
         <div class="header_inner">
-
             <div id="logo">
                 <a href="/">
                     <b><h1 style="font-size: 1.5rem; margin-right: 10px;">IReal</h1></b>
@@ -33,95 +32,86 @@
                 </a>
                 <div uk-drop="mode: click;offset:9" class="header_dropdown profile_dropdown border-t">
                     <ul>
-                        <li><a href="/profile/{{user}}"> Profile </a> </li>
+                        <li><a href="/profile/{{user}}"> Profile </a></li>
                         <li><a href="/usersettings"> Account setting </a> </li>
-                        {% comment %} <li><a href="explore.html">explore </a> </li>
-                        <li><a href="#"> Help </a> </li> {% endcomment %}
-                        <li><a href="logout"> Log Out</a></li>
+                        <li><a href="/logout"> Log Out</a></li>
                     </ul>
                 </div>
-
             </div>
         </div>
     </header>
-	
-	<section class="firstSection"> <!-- top area -->
-		<div class="user-avatar"> 
-			<figure>
-				<img src="{{user_profile.profileimg.url}}" alt="Image Profile"> <!--.url to get the image -->
-			</figure>
-		</div>
-		
-		<section class="secondSection">
-				<h5><b>@{{user_profile.user.username}}</b></h5>
-				<div class="bio">
-					Bio: {{user_profile.bio}}
-				</div>
 
-				<form class="postsandfollowers" action="/follow" method="POST"> <!--action connects form to this specific url /follow -->
-					{% csrf_token %}
-					<div class="add-btn">
-					{% if user_post_length == 0 %}
-					<span><b> {{user_post_length}} No Posts </b></span>
-					{% elif user_post_length == 1 %}
-					<span><b> {{user_post_length}} Post </b></span>
-					{% else %}
-					<span><b> {{user_post_length}} Posts </b></span>
-					{% endif %}
 
-					{% if user_followers == 0 %}
-					<span><b>No Followers</b></span>
-					{% elif user_followers == 1%}
-					<span><b>{{user_followers}} Follower</b></span>
-					{% else %}
-					<span><b>{{user_following}} Followers</b></span>
-					{% endif %}
-
-					<input type="hidden" value="{{user.username}}" name="follower" />
-					<input type="hidden" value="{{user_object.username}}" name="user" />
-					<br>
-
-					{% if user_object.username == user.username %}
-					<a class="bg-blue-400 profileBtn" href="/usersettings" title="" data-ripple="">Account Settings</a>
-					{% else %}
-					<a class="bg-blue-400 profileBtn" title="" data-ripple=""><button type="submit">{{button_text}}</button></a>
-					{% endif %}
-
+	<section class="postsSection">
+		<div> <!-- top area -->
+			<form action="/follow" method="POST"> <!--action connects form to this specific url /follow -->
+				{% csrf_token %}
+				<a class="flex flex-col items-center border border-gray-200 rounded-lg shadow ">
+					<img class="object-cover object-cover h-48 w-96 rounded-t-lg  md:h-auto md:w-48 md:rounded-none md:rounded-l-lg" src="{{user_profile.profileimg.url}}" alt="">
+					<div class="flex flex-col justify-between p-4 leading-normal">
+						<h5><b>@{{user_profile.user.username}}</b></h5>
+						<div class="bio">
+							Bio: {{user_profile.bio}}
+						</div>
+						<div class="add-btn">
+						{% if user_post_length == 0 %}
+						<span><b> {{user_post_length}} No Posts </b></span>
+						{% elif user_post_length == 1 %}
+						<span><b> {{user_post_length}} Post </b></span>
+						{% else %}
+						<span><b> {{user_post_length}} Posts </b></span>
+						{% endif %}
+						
+						{% if user_following == 0 %}
+						<span><b>No Followers</b></span>
+						{% elif user_following == 1 %}
+						<span><b>{{user_following}} Follower</b></span>
+						{% else %}
+						<span><b>{{user_following}} Followers</b></span>
+						{% endif %}
+						</div>
 					</div>
-				</form>
+				</a>
+			</form>
+		</div>
+
+		<section>
+
+			<div class="text-center font-bold text-3xl mt-2">
+			{% if user_post_length == 0%}
+				<span> No Posts </span>
+			{% elif user_post_length == 1%}
+				<span> Post </span>
+			{% else %}
+				<span> Posts </span>
+			{% endif %}
+			</div>
+
+			<!--Card 1-->
+
+			<div class="flex flex-wrap w-[250] h-[300] justify-start p-10 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4 gap-5">		
+			{% for post in user_posts %}
+			{% if post.image %}
+				<div class="rounded overflow-hidden shadow-lg">
+				<img class="w-full" src="{{post.image.url}}" alt="Mountain">
+				<div class="px-6 py-4">
+					<p class="text-gray-700 text-base">
+					{{post.caption}}  
+					</p>
+				</div>
+				</div>		
+			{% endif%}
+			{% endfor %}
+			</div>
+			</div>
 		</section>
 	</section>
-
-	<section>
-
-		{% if user_post_length == 0%}
-			<h1 class="postCount"> No Posts </h1>
-		{% elif user_post_length == 1%}
-			<h1 class="postCount"> Post </h1>
-		{% else %}
-			<h1 class="postCount"> Posts </h1>
-		{% endif %}
-
-		<div class="UserPosts">
-			<ul class="photos">
-				{% for post in user_posts %}
-				{% if post.image %}
-				<li>
-					<a href="{{post.image.url}}" title="" data-strip-group="mygroup" data-strip-group-options="loop: false">
-						<img src="{{post.image.url}}" style="height: 250px; width: 300px;" alt=""></a>
-				</li>
-				{% endif%}
-				{% endfor %}
-			</ul>
-		</div>
-	</section>
-
-
+	
+	
 	<script data-cfasync="false" src="{% static '../../cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js' %}"></script>
 	<script src="{% static 'js/main.min.js' %}"></script>
 	<script src="{% static 'js/script.js' %}"></script>
-	 <!-- Scripts
-    ================================================== -->
+	 <!-- Scripts ================================================== -->
     <script src="{% static 'assets/js/tippy.all.min.js' %}"></script>  
     <script src="{% static 'assets/js/jquery-3.3.1.min.js' %}"></script>
     <script src="{% static 'assets/js/uikit.js' %}"></script>

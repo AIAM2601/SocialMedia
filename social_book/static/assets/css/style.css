@@ -5,7 +5,7 @@
 /* Import font
 ----------------------------------------------------------------- */
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;display=swap");
- 
+
 
 body{
   /* background-color: #B0B3B8!important; */
@@ -1316,7 +1316,7 @@ strong {
 ----------------------------------------------------------------- */
 
 /* ---------------------------------- */
-/*  Simplebar  
+/*  Simplebar
 /* ---------------------------------- */
 [data-simplebar] {
   position: relative;
@@ -1813,29 +1813,35 @@ header .uk-dropdown {
           box-shadow: 0 2px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
 }
 
+@media (max-width: 600px) {
+  header .searchBarIndex {
+    display: none;
+  }
+}
+
 @media (max-width: 1100px) {
-  header {
+  /* header {
     min-height: 67px !important;
     height: auto;
     position: fixed !important;
     background: #fff;
     margin-top: -2px;
-  }
-  header .header_inner {
+  } */
+  /* header .header_inner {
     display: block;
-    padding: 20px;
-  }
-  header .header_inner .left-side {
+    margin: 5px;
+  } */
+  /* header .header_inner .left-side {
     display: block;
     width: 100%;
-  }
-  header .header_inner .left-side #logo {
+  } */
+  /* header .header_inner .left-side #logo {
     margin-left: 45px;
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
-  }
-  header .header_inner .left-side #logo img {
+  } */
+   /* header .header_inner .left-side #logo img {
     max-width: 80px;
   }
   header .header_inner .left-side #logo img.logo_inverse {
@@ -1851,12 +1857,12 @@ header .uk-dropdown {
     position: absolute;
     right: 20px;
     top: 17px;
-  }
+  } 
   header .header_inner .right-side .header-links-item {
     padding: 7px;
     margin: 0;
   }
-  header .header_menu ul li a:after,
+ header .header_menu ul li a:after,
   header .header_menu ul ul li a:after {
     content: '\e930';
     margin-top: 7px;
@@ -1865,7 +1871,7 @@ header .uk-dropdown {
     right: 20px;
     color: #585858;
     font-size: 20px;
-  }
+  } */
   .header_dropdown {
     left: auto !important;
     right: -20px !important;
@@ -2452,7 +2458,7 @@ header .uk-dropdown {
 }
 
 /* ---------------------------------- */
-/* catagroy  card   
+/* catagroy  card
 ------------------------------------- */
 .group-catagroy-card {
   /* background-color: #ffffff; */
@@ -2536,4 +2542,3 @@ header .uk-dropdown {
     position: absolute;
   }
 }
- 

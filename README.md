@@ -24,6 +24,8 @@ Social media app sections <br>
 ![Alt text](/images/resetpassword.png)
 ###### Index
 ![Alt text](/images/index.png)
+###### Post
+![Alt text](/images/post.png)
 ###### Search
 ![Alt text](/images/search.png)
 ###### Profile

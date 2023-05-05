@@ -16,6 +16,9 @@ Social media app sections <br>
     <li>Search: User can search by username</li>
 </ul>
 
+### Video
+[![Watch the video](/images/video.jpg)](https://youtu.be/x2BC9wpp8qU)
+
 ###### Login
 ![Alt text](/images/login.png)
 ###### Register

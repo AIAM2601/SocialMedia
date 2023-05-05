@@ -17,7 +17,7 @@ Social media app sections <br>
 </ul>
 
 ### Video
-[![Watch the video](/images/video.jpg)](https://youtu.be/x2BC9wpp8qU)
+[![Watch the video](/images/video.jpg)](https://youtu.be/SX5jV4jFd60)
 
 ###### Login
 ![Alt text](/images/login.png)

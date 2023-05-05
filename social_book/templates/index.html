@@ -133,7 +133,7 @@
                     <!-- left sidebar-->
                     <div class="space-y-5 flex-shrink-0 lg:w-7/12">
                         <!-- post 1-->
-                        <div class="bg-white shadow rounded-md  -mx-2 lg:mx-0">
+                        <div class="bg-white  shadow rounded-md  -mx-2 lg:mx-0">
                             <!-- post header-->
                             {% for post in posts reversed %} <!--to show latest post reversed-->
                             <div class="flex justify-between items-center px-4 py-3">
@@ -183,7 +183,7 @@
                             {% if post.image %}
                             <div uk-lightbox>
                                 <a href="{{post.image.url}}">  
-                                    <img src="{{post.image.url}}" alt="">
+                                    <img src="{{post.image.url}}" alt="post">
                                 </a>
                             </div>
                             {% else %}

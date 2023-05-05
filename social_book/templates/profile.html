@@ -46,9 +46,9 @@
 		<div> <!-- top area -->
 			<form action="/follow" method="POST"> <!--action connects form to this specific url /follow -->
 				{% csrf_token %}
-				<a class="flex flex-col items-center border border-gray-200 rounded-lg shadow ">
+				<div class="flex flex-col items-center border border-gray-200 rounded-lg shadow ">
 					<img class="object-cover object-cover h-48 w-96 rounded-t-lg  md:h-auto md:w-48 md:rounded-none md:rounded-l-lg" src="{{user_profile.profileimg.url}}" alt="">
-					<div class="flex flex-col justify-between p-4 leading-normal">
+					<div class="flex flex-col justify-between p-2 leading-normal">
 						<h5><b>@{{user_profile.user.username}}</b></h5>
 						<div class="bio">
 							Bio: {{user_profile.bio}}
@@ -71,7 +71,15 @@
 						{% endif %}
 						</div>
 					</div>
-				</a>
+
+					<input type="hidden" value="{{user.username}}" name="follower" />
+					<input type="hidden" value="{{user_object.username}}" name="user" />
+					{% if user_object.username == user.username %}
+					<a href="/usersettings" class="bg-blue-400 px-3 py-1 mb-2 rounded-md shadow text-white">Account Settings</a>
+					{% else %}
+					<a><button type="submit" class="bg-blue-400 px-3 py-1 mb-2 rounded-md shadow text-white">{{button_text}}</button></a>
+					{% endif %}  
+				</div>
 			</form>
 		</div>
 

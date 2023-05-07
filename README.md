@@ -10,10 +10,10 @@ App is core <br>
 Social media app sections <br>
 <ul>
     <li>SignIn/SignUp: full Sign in and Sign up system</li>
-    <li>Index: User will see posts, can post and like and comment on other users' posts, User can search by Username, User can move to other pages, User will get suggestions of users to follow</li>
-    <li>Profile: User can see image profile, username, Bio, counter of posts and followers, as well as the posts made</li>
-    <li>Account Settings: User can change profile image, Bio description and location</li>
-    <li>Search: User can search by username</li>
+    <li>Index: The user will see posts, can post and like and comment on other users' posts, can search by Username, can move to other pages and will get suggestions of users to follow</li>
+    <li>Profile: The user can see the image profile, username, Bio, counter of posts and followers, as well as the posts made</li>
+    <li>Account Settings: The user can change profile image, Bio description and location</li>
+    <li>Search: The user can search by username</li>
 </ul>
 
 ### Video
